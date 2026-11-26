@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gaurav Jain - Business case</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a senior modeller's considered note to a modelling leader; plain, specific, not over-optimistic
+   IDEA: a discussion paper turned into working diagrams; every page has one picture you can click into
+   PICTURE: hub, playbook chain, maturity staircase, cycle, pipeline, ascending steps
+   COLOUR and TYPE: white, ink, slate for structure and AI, one deep red for the client's decision; Source Serif 4 + Inter
+   LAYOUT: sideways pages, headline full width, diagram first, detail card under it */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#10191e);--ink:light-dark(#121212,#eef2f4);--mute:light-dark(#505c66,#9fb1bb);--red:light-dark(#a3122a,#ff6b5e);--slate:light-dark(#2e6f8e,#7cbcd9);--panel:light-dark(#eef3f6,#172731);--tint:light-dark(#dbe9f0,#1d3644);--rule:light-dark(#d3dce1,#2b3c46)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;overflow:hidden;display:grid;grid-template-rows:auto 1fr auto;height:100dvh}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,"Noto Serif","DejaVu Serif",serif;font-weight:600;line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,4.6vw,50px);max-width:20ch}h2{font-size:clamp(24px,3vw,34px);max-width:34ch}h3{font-size:18px;line-height:1.3}
+p{margin:0}ul{margin:0;padding-left:20px}li{margin:5px 0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,g[tabindex]:focus-visible{outline:2px solid var(--slate);outline-offset:2px}
+.ic{display:inline-grid;place-items:center;flex:none}.ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.top{display:flex;align-items:baseline;gap:10px;padding:12px max(4vw,16px);border-bottom:1px solid var(--rule);font-size:14px}
+.top b{font-weight:600}.top span{color:var(--mute)}
+.deck{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.deck::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:start;overflow-y:auto;padding:clamp(22px,3.6vw,48px) max(5vw,18px) 40px}
+.in{max-width:1120px;margin:0 auto;display:grid;gap:clamp(16px,2vw,24px)}
+.lede{font-size:clamp(16px,1.5vw,18px);color:var(--mute);max-width:74ch}
+.note{font-size:14px;color:var(--mute)}
+.card{background:var(--panel);padding:20px 22px;border-radius:4px}
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.trio span.l{display:block;font-size:13px;color:var(--mute);margin-bottom:4px}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:3px 10px;border-radius:20px;background:var(--tint);color:var(--slate);font-weight:500}
+.badge.red{background:transparent;border:1px solid var(--red);color:var(--red)}
+.hint{font-size:13px;color:var(--slate);display:flex;align-items:center;gap:6px}
+/* cover */
+.cover{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center;min-height:100%}
+.pills{display:grid;gap:10px}
+.pill{display:flex;gap:14px;align-items:center;padding:14px 16px;border:1px solid var(--rule);border-radius:4px}
+.pill .ic{width:40px;height:40px;border-radius:50%;background:var(--tint);color:var(--slate)}
+.pill.core{background:var(--ink);color:var(--bg);border-color:var(--ink)}.pill.core .ic{background:var(--bg);color:var(--ink)}
+.pill b{display:block;font-size:16px}.pill small{color:var(--mute);font-size:13px}.pill.core small{color:var(--bg);opacity:.75}
+/* hub */
+.hub{display:grid;grid-template-columns:minmax(0,1fr) 200px minmax(0,1fr);gap:18px 40px;align-items:center}
+.hub .core{grid-column:2;grid-row:1/3;aspect-ratio:1;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;text-align:center;padding:24px;font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:19px;line-height:1.2;position:relative}
+.hub .node{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--bg);border:1px solid var(--rule);border-radius:4px;padding:14px 16px;min-height:96px;position:relative;transition:border-color .2s,background .2s}
+.hub .node .ic{width:42px;height:42px;border-radius:50%;background:var(--tint);color:var(--slate)}
+.hub .node b{display:block;font-family:"Source Serif 4",Georgia,serif;font-size:18px;line-height:1.25}
+.hub .node small{display:block;color:var(--mute);font-size:13.5px;margin-top:2px}
+.hub .node[aria-pressed=true]{border-color:var(--slate);background:var(--panel)}
+.hub .l::after,.hub .r::after{content:"";position:absolute;top:50%;width:40px;height:1.5px;background:var(--mute)}
+.hub .l::after{right:-41px}.hub .r::after{left:-41px}
+.hub .l{grid-column:1}.hub .r{grid-column:3}
+/* chain */
+.chain{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));position:relative}
+.chain::before{content:"";position:absolute;left:8%;right:8%;top:30px;height:2px;background:var(--rule)}
+.chain button{background:transparent;border:0;display:grid;justify-items:center;gap:8px;padding:0 4px 6px;text-align:center;position:relative}
+.chain .ic{width:60px;height:60px;border-radius:50%;background:var(--bg);border:2px solid var(--rule);color:var(--mute);transition:all .2s}
+.chain .ic svg{width:26px;height:26px}
+.chain b{font-size:14px;font-weight:600;line-height:1.25}
+.chain small{font-size:12px;color:var(--mute)}
+.chain button[aria-pressed=true] .ic{border-color:var(--slate);background:var(--slate);color:var(--bg)}
+.chain .dev .ic{border-style:dashed}
+.rollout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:2px solid var(--ink)}
+.rollout div{padding:12px 18px 0 0}
+.rollout b{display:block}.rollout p{color:var(--mute);font-size:14.5px;margin-top:2px}
+.rollout i{font-style:normal;font-family:"Source Serif 4",Georgia,serif;color:var(--slate);font-size:22px;font-weight:600;margin-right:6px}
+/* stairs */
+.stairs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;gap:10px}
+.stairs button{border:0;border-radius:4px 4px 0 0;text-align:left;padding:14px 16px;display:flex;flex-direction:column;gap:6px;background:var(--panel);transition:background .2s,color .2s}
+.stairs button:nth-child(1){min-height:120px}.stairs button:nth-child(2){min-height:170px}.stairs button:nth-child(3){min-height:220px}
+.stairs button .ic{width:38px;height:38px;border-radius:50%;background:var(--bg);color:var(--slate)}
+.stairs b{font-family:"Source Serif 4",Georgia,serif;font-size:18px;line-height:1.2}
+.stairs small{font-size:13px;color:var(--mute)}
+.stairs button[aria-pressed=true]{background:var(--slate);color:#fff}.stairs button[aria-pressed=true] small{color:#fff;opacity:.85}
+.base{height:4px;background:var(--ink);margin-top:-16px}
+.ideas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.idea{border:1px dashed var(--slate);border-radius:4px;padding:14px;display:grid;gap:6px;align-content:start}
+.idea .ic{width:36px;height:36px;border-radius:50%;background:var(--tint);color:var(--slate)}
+.idea b{font-size:15px;line-height:1.3}.idea p{font-size:13.5px;color:var(--mute)}
+.vibe{display:flex;gap:14px;align-items:flex-start;border-left:3px solid var(--slate);padding:4px 0 4px 16px}
+.vibe .ic{color:var(--slate)}.vibe p{color:var(--mute)}
+/* flow */
+.flow3{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr) 44px minmax(0,.9fr);align-items:center}
+.inputs{display:grid;gap:8px}
+.inputs div{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--rule);border-radius:4px;font-size:15px}
+.inputs .ic{color:var(--slate)}
+.arrow{height:2px;background:var(--mute);position:relative;margin:0 6px}
+.arrow::after{content:"";position:absolute;right:-1px;top:-5px;border:6px solid transparent;border-left:8px solid var(--mute);border-right:0}
+.modelbox{border:2px solid var(--slate);border-radius:4px;padding:16px;text-align:center;display:grid;gap:6px;justify-items:center;background:var(--panel)}
+.modelbox .ic{color:var(--slate)}.modelbox b{font-family:"Source Serif 4",Georgia,serif;font-size:18px}.modelbox small{color:var(--mute);font-size:13px}
+.decision{aspect-ratio:1;max-width:190px;width:100%;justify-self:center;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;text-align:center;padding:18px;font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:18px;line-height:1.2}
+.points{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.pt{border-top:2px solid var(--ink);padding-top:12px}
+.pt .ic{color:var(--slate);margin-bottom:6px}.pt b{display:block}.pt p{font-size:14.5px;color:var(--mute);margin-top:4px}
+/* cycle */
+.cyc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center}
+.cyc>svg{width:100%;height:auto;display:block;max-width:480px;justify-self:center}
+.cyc g.n{cursor:pointer}
+.cyc g.n circle{fill:var(--bg);stroke:var(--rule);stroke-width:2;transition:all .2s}
+.cyc g.n[aria-pressed=true] circle{fill:var(--slate);stroke:var(--slate)}
+.cyc g.n .ig{color:var(--mute)}.cyc g.n[aria-pressed=true] .ig{color:#fff}
+.cyc text{font-family:Inter,system-ui,sans-serif}
+/* pipeline */
+.pipe{display:grid;grid-template-columns:minmax(0,.8fr) 40px minmax(0,2fr) 40px minmax(0,.9fr);align-items:center}
+.tape{border:1px solid var(--rule);border-radius:4px;padding:12px;display:grid;gap:5px}
+.tape b{font-size:14px}.tape i{display:block;height:6px;border-radius:2px;background:var(--rule)}
+.tape i:nth-child(odd){width:86%}.tape i:nth-child(3n){width:64%}
+.lenses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.lenses button{display:flex;gap:8px;align-items:center;text-align:left;border:1px solid var(--rule);background:var(--bg);border-radius:4px;padding:10px;min-height:56px;font-size:14px;font-weight:500;line-height:1.25}
+.lenses .ic{color:var(--slate)}
+.lenses button[aria-pressed=true]{border-color:var(--slate);background:var(--panel)}
+.outcome{border-radius:4px;background:var(--red);color:#fff;padding:16px;font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:17px;line-height:1.25;text-align:center}
+.obs{border-left:3px solid var(--slate);padding:4px 0 4px 18px}.obs p{color:var(--mute)}.obs p+p{margin-top:8px}
+/* arc */
+.arc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:end}
+.arc button{border:1px solid var(--rule);border-bottom:0;background:var(--bg);border-radius:4px 4px 0 0;text-align:left;padding:16px;display:flex;flex-direction:column;gap:6px}
+.arc button:nth-child(1){min-height:130px}.arc button:nth-child(2){min-height:175px}.arc button:nth-child(3){min-height:220px}
+.arc .ic{width:40px;height:40px;border-radius:50%;background:var(--tint);color:var(--slate)}
+.arc small{font-size:13px;color:var(--mute)}.arc b{font-family:"Source Serif 4",Georgia,serif;font-size:19px;line-height:1.2}
+.arc button[aria-pressed=true]{background:var(--panel);border-color:var(--slate)}
+.arc button:nth-child(3) b{color:var(--red)}
+.close{font-family:"Source Serif 4",Georgia,serif;font-size:clamp(18px,1.9vw,21px);line-height:1.45;max-width:64ch}
+/* nav */
+.ctl{display:flex;align-items:center;gap:12px;padding:10px max(4vw,16px);border-top:1px solid var(--rule)}
+.ctl>button{width:44px;height:44px;border:1px solid var(--rule);background:var(--bg);border-radius:4px;font-size:18px}
+.ctl>button:disabled{opacity:.35;cursor:default}
+.dots{flex:1;display:flex;justify-content:center;gap:6px}
+.dots button{width:28px;height:28px;border:0;background:transparent;display:grid;place-items:center;padding:0}
+.dots button::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--rule);transition:all .2s}
+.dots button[aria-current=true]::after{background:var(--ink);width:22px;border-radius:4px}
+#sec{font-size:14px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:30vw}
+@media(max-width:960px){.ideas,.points{grid-template-columns:repeat(2,minmax(0,1fr))}.chain{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:18px}.chain::before{display:none}.lenses{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.cover,.cols2,.trio,.cyc,.rollout{grid-template-columns:minmax(0,1fr)}
+ .hub{grid-template-columns:minmax(0,1fr)}.hub .core{grid-column:1;grid-row:auto;aspect-ratio:auto;border-radius:4px;padding:16px}.hub .l,.hub .r{grid-column:1}.hub .l::after,.hub .r::after{display:none}
+ .stairs,.arc{grid-template-columns:minmax(0,1fr)}.stairs button,.arc button{min-height:0!important;border-radius:4px;border-bottom:1px solid var(--rule)}.base{display:none}
+ .flow3,.pipe{grid-template-columns:minmax(0,1fr)}.arrow{width:2px;height:26px;justify-self:center;margin:4px 0}.arrow::after{right:auto;left:-5px;top:auto;bottom:-1px;border:6px solid transparent;border-top:8px solid var(--mute);border-bottom:0}
+ #sec{display:none}.dots button{width:20px}}
+@media(max-width:480px){.ideas,.points,.lenses,.chain{grid-template-columns:minmax(0,1fr)}.chain button{grid-template-columns:auto 1fr;justify-items:start;text-align:left;align-items:center}.chain button small{grid-column:2}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+html[data-print="1"]{color-scheme:light;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html[data-print="1"],html[data-print="1"] body{height:auto;overflow:visible}
+html[data-print="1"] body{display:block;font-size:14px}
+html[data-print="1"] .deck{display:block;overflow:visible}
+html[data-print="1"] .slide{overflow:visible;break-after:page;padding:34px 56px 24px}
+html[data-print="1"] .slide:last-child{break-after:auto}
+html[data-print="1"] .cover{min-height:760px}
+html[data-print="1"] .sel,html[data-print="1"] .ctl,html[data-print="1"] .hint,html[data-print="1"] #hubD{display:none}
+html[data-print="1"] .card{break-inside:auto}
+html[data-print="1"] .pitem{break-inside:avoid}
+html[data-print="1"] .pitem+.pitem{border-top:1px solid var(--rule);margin-top:14px;padding-top:14px}
+html[data-print="1"] .flow3,html[data-print="1"] .points,html[data-print="1"] .stairs,html[data-print="1"] .arc,html[data-print="1"] .chain,html[data-print="1"] .ideas{break-inside:avoid}
+@page{size:1280px 905px;margin:0}
+</style>
+</head>
+<body>
+<header class="top"><b>Gaurav Jain</b><span>Modelling-led solutions within FVA</span></header>
+
+<main class="deck" id="deck">
+
+<!-- 1 -->
+<section class="slide" data-name="Introduction"><div class="in cover">
+  <div style="display:grid;gap:18px">
+    <h1>What I would bring to the team</h1>
+    <p class="lede">Modelling stays at the core. Around it, four things: AI built into how we deliver, a solution mindset on every engagement, going to market together with wider FVA colleagues, and loan tape analytics as a new offering. Over time, I want to grow from modeller into a transaction consultant who can originate and pitch for the wider FVA practice.</p>
+    <p class="note">15 years as a transaction adviser and financial modeller.</p>
+  </div>
+  <div class="pills">
+    <div class="pill core"><span class="ic" data-ic="layers"></span><div><b>Modelling core</b><small>Build, review, valuation and transaction models</small></div></div>
+    <div class="pill"><span class="ic" data-ic="spark"></span><div><b>AI in delivery</b><small>Efficiency, review quality, presentation</small></div></div>
+    <div class="pill"><span class="ic" data-ic="target"></span><div><b>Solution mindset</b><small>Lead with the client's decision</small></div></div>
+    <div class="pill"><span class="ic" data-ic="people"></span><div><b>Go to market with FVA</b><small>Pitch and deliver together</small></div></div>
+    <div class="pill"><span class="ic" data-ic="table"></span><div><b>Loan tape analytics</b><small>A new buy-side offering</small></div></div>
+  </div>
+</div></section>
+
+<!-- 2 -->
+<section class="slide" data-name="Overview"><div class="in">
+  <h2>Four things I would add around the modelling core</h2>
+  <p class="hint"><span class="ic" data-ic="tap"></span>Select one for a summary, or open its page</p>
+  <div class="hub" id="hub">
+    <button class="node l" data-i="0"><span class="ic" data-ic="spark"></span><span><b>AI in modelling delivery</b><small>Efficiency and productivity today; client tools later</small></span></button>
+    <div class="core">Modelling core</div>
+    <button class="node r" data-i="1"><span class="ic" data-ic="target"></span><span><b>A solution mindset</b><small>Lead with the decision, deliver through the model</small></span></button>
+    <button class="node l" data-i="2"><span class="ic" data-ic="people"></span><span><b>Go to market with wider FVA</b><small>Join conversations, find white spaces, pitch together</small></span></button>
+    <button class="node r" data-i="3"><span class="ic" data-ic="table"></span><span><b>Loan tape analytics</b><small>Loan-level insight for buy-side credit deals</small></span></button>
+  </div>
+  <div class="card" id="hubD"></div>
+</div></section>
+
+<!-- 3 -->
+<section class="slide" data-name="AI playbook"><div class="in">
+  <h2>AI playbook: efficiency and productivity across the modelling process</h2>
+  <p class="lede">AI is useful at every stage of a modelling engagement, but in different ways. The aim is to take time out of the mechanical work and put it into review and judgement. At EY-Parthenon we are working on developing agentic workflows for model build and model review. They are not yet in production.</p>
+  <div class="chain" id="chain"></div>
+  <div class="card" id="chainD"></div>
+  <div>
+    <h3 style="margin-bottom:10px">How I would introduce it in the team</h3>
+    <div class="rollout">
+      <div><b><i>1</i>Start where the risk is low</b><p>Review checks, documentation, data mapping and first-draft commentary. Quick wins that build trust in the tools.</p></div>
+      <div><b><i>2</i>Build shared assets</b><p>A prompt and skills library based on our modelling standards, so juniors get consistent results and new joiners ramp up faster.</p></div>
+      <div><b><i>3</i>Adopt agentic workflows as they mature</b><p>Bring in first-cut build and review agents once they work reliably on real engagements, not before.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 4 -->
+<section class="slide" data-name="Presentation layer and client tools"><div class="in">
+  <h2>From internal efficiency to tools we can offer clients</h2>
+  <p class="lede">The first gains are internal. As the capability matures, the same skills open up a better presentation layer and, eventually, AI-powered tools we can offer to clients. <span class="sel">Select a step.</span></p>
+  <div><div class="stairs" id="stairs"></div><div class="base"></div></div>
+  <div class="card" id="stairsD"></div>
+  <div>
+    <h3 style="margin-bottom:10px">White spaces I would look at, once the basics are in place</h3>
+    <div class="ideas">
+      <div class="idea"><span class="ic" data-ic="coins"></span><b>Investor return economics app</b><p>Distribution waterfalls, IRR and MOIC by investor class under different exit scenarios, with plain-language questions on the results.</p></div>
+      <div class="idea"><span class="ic" data-ic="table"></span><b>Loan tape analytics tool</b><p>Upload a tape, get standard cuts, vintage curves and roll rates, and a first-draft summary of findings.</p></div>
+      <div class="idea"><span class="ic" data-ic="shield"></span><b>Model review assistant</b><p>Mechanical checks on a client model, with findings logged for a reviewer to confirm.</p></div>
+      <div class="idea"><span class="ic" data-ic="chart"></span><b>Scenario explorer</b><p>A client-facing front end on a model, so management can test their own assumptions.</p></div>
+    </div>
+  </div>
+  <div class="vibe"><span class="ic" data-ic="code"></span><p><b style="color:var(--ink)">Why this is now realistic:</b> with AI, coding has become far more manageable. Through vibe coding, a modeller can prototype a working tool without a development team, as with this page. Anything a client relies on would still need proper testing, security and firm sign-off.</p></div>
+</div></section>
+
+<!-- 5 -->
+<section class="slide" data-name="Solution mindset"><div class="in">
+  <h2>A solution mindset: lead with the decision, deliver through the model</h2>
+  <p class="lede">The client is trying to make a decision. Modelling and analytics are how we get them there, working alongside the other workstreams on the deal rather than separately.</p>
+  <div class="flow3">
+    <div class="inputs">
+      <div><span class="ic" data-ic="scale"></span>Valuation colleagues</div>
+      <div><span class="ic" data-ic="search"></span>Diligence findings</div>
+      <div><span class="ic" data-ic="people"></span>Deal team and client</div>
+    </div>
+    <div class="arrow"></div>
+    <div class="modelbox"><span class="ic" data-ic="layers"></span><b>Model and analytics</b><small>Where the inputs meet and get tested</small></div>
+    <div class="arrow"></div>
+    <div class="decision">The client's decision</div>
+  </div>
+  <div class="points">
+    <div class="pt"><span class="ic" data-ic="map"></span><b>Scoping</b><p>Start with the decision the model must support and who will rely on it. That sets structure, detail and which scenarios matter.</p></div>
+    <div class="pt"><span class="ic" data-ic="people"></span><b>Delivery</b><p>Involve valuation, diligence and deal colleagues from the start, so the model answers their questions too.</p></div>
+    <div class="pt"><span class="ic" data-ic="compass"></span><b>Output</b><p>Lead with what the numbers mean: what drives value, where the risk is, what would change the answer.</p></div>
+    <div class="pt"><span class="ic" data-ic="arrow"></span><b>Follow-through</b><p>Look for the client's next question. That is often where the next piece of work comes from.</p></div>
+  </div>
+</div></section>
+
+<!-- 6 -->
+<section class="slide" data-name="Go to market with FVA"><div class="in">
+  <h2>Going to market together with wider FVA colleagues</h2>
+  <p class="lede">I would not want modelling to sell on its own. The stronger route is to be part of the conversations colleagues across FVA are already having, and to pitch and deliver together.</p>
+  <div class="cyc">
+    <svg id="cyc" viewBox="0 0 480 460" role="img" aria-label="Go-to-market cycle with FVA colleagues"></svg>
+    <div class="card" id="cycD"></div>
+  </div>
+</div></section>
+
+<!-- 7 -->
+<section class="slide" data-name="Loan tape analytics"><div class="in">
+  <h2>Loan tape analytics for buy-side credit deals</h2>
+  <p class="lede">Credit portfolios run to hundreds of thousands of loans. A deep dive at loan and cohort level shows the buyer what portfolio averages hide, and links straight to price and deal terms. <span class="sel">Select an area of analysis.</span></p>
+  <div class="pipe">
+    <div class="tape"><b>Loan tape</b><i></i><i></i><i></i><i></i><i></i><i></i><i></i><span class="note">Loan-level data from the data room</span></div>
+    <div class="arrow"></div>
+    <div class="lenses" id="lens"></div>
+    <div class="arrow"></div>
+    <div class="outcome">Price, structure and diligence questions</div>
+  </div>
+  <div class="card" id="lensD"></div>
+  <div class="cols2">
+    <div class="obs"><h3>What it showed on a recent consumer lending deal</h3>
+      <p>Most of the growth came from existing borrowers, with ticket size and tenor rising as the rate fell. Delinquency for those borrowers was low and improving as the book grew.</p>
+      <p>But once an account went past 30 days, very few came back. The buyer's questions moved to how growth was being priced, and how much of the book was one bucket away from a loss.</p></div>
+    <div class="obs"><h3>How I would start</h3>
+      <p>On live deals where a tape is already in the data room, working with the diligence team, and building the toolkit as we go. It applies to banks, consumer and auto finance, BNPL, SME lending and credit funds.</p></div>
+  </div>
+</div></section>
+
+<!-- 8 -->
+<section class="slide" data-name="Modeller to transaction consultant"><div class="in">
+  <h2>From modeller to transaction consultant</h2>
+  <p class="lede">I would grow this step by step. Each step builds on the credibility of the one before. <span class="sel">Select a step.</span></p>
+  <div><div class="arc" id="arc"></div><div class="base" style="margin-top:0"></div></div>
+  <div class="card" id="arcD"></div>
+  <p class="close">Modelling stays my core strength. What I would bring is AI in how we deliver, a solution mindset in how we engage, and the willingness to go to market with the wider FVA team. Over time, I want to be someone who brings in and leads wider FVA work, not only the models behind it.</p>
+</div></section>
+
+</main>
+
+<nav class="ctl" aria-label="Pages"><button id="prev" aria-label="Previous page">←</button><span id="sec"></span><div class="dots" id="dots"></div><button id="next" aria-label="Next page">→</button></nav>
+
+<script>
+{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const P={
+ spark:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18"/>',
+ target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+ people:'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15.5 14.5c3 0 5.5 2 5.5 5"/>',
+ table:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16"/>',
+ layers:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
+ compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+ shield:'<path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+ map:'<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/>',
+ db:'<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+ build:'<path d="M4 20h16M6 20V10l6-5 6 5v10"/><path d="M10 20v-5h4v5"/>',
+ chart:'<path d="M4 20V11M10 20V5M16 20v-8M21 20H3"/>',
+ screen:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+ code:'<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>',
+ search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+ chat:'<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',
+ arrow:'<path d="M5 19L19 5M9 5h10v10"/>',
+ coins:'<ellipse cx="9" cy="7" rx="6" ry="3"/><path d="M3 7v5c0 1.7 2.7 3 6 3s6-1.3 6-3V7M9 15v2c0 1.7 2.7 3 6 3s6-1.3 6-3v-5c0-1.7-2.7-3-6-3"/>',
+ scale:'<path d="M12 4v16M7 20h10M5 8h14M5 8l-3 6c0 1.7 1.3 3 3 3s3-1.3 3-3zM19 8l-3 6c0 1.7 1.3 3 3 3s3-1.3 3-3z"/>',
+ tap:'<path d="M9 11V5a2 2 0 014 0v6M13 10a2 2 0 014 0v1a2 2 0 014 0v4a6 6 0 01-6 6h-2a6 6 0 01-5-3l-2.5-4a1.5 1.5 0 012.5-1.6L9 14"/>',
+ handshake:'<path d="M3 12l4-4 4 2 3-2 4 2 3 2M7 8l-4 8 3 3M17 10l4 6-3 3M9 15l2 2M11 13l3 3M13 11l3 3"/>',
+ trend:'<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>',
+ alert:'<path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/>',
+ flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>'
+};
+const ic=(k,cls="ic")=>`<span class="${cls}"><svg viewBox="0 0 24 24" aria-hidden="true">${P[k]||""}</svg></span>`;
+document.querySelectorAll("[data-ic]").forEach(e=>{e.innerHTML=`<svg viewBox="0 0 24 24" aria-hidden="true">${P[e.dataset.ic]||""}</svg>`;});
+const list=a=>"<ul style=\"margin-top:8px\">"+a.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
+
+const PRINT=document.documentElement.dataset.print==="1";
+function picker(btns,out,items,body){
+  if(PRINT){out.innerHTML=items.map(x=>`<div class="pitem">${body(x)}</div>`).join("");return;}
+  const pick=i=>{btns.forEach((b,j)=>b.setAttribute("aria-pressed",String(i===j)));out.innerHTML=body(items[i]);};
+  btns.forEach((b,i)=>{b.addEventListener("click",()=>pick(i));b.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(i);}});});
+  pick(0);
+}
+
+/* hub */
+const hub=[
+ {t:"AI in modelling delivery",go:2,d:"A practical playbook across the model lifecycle: scoping, data, build, review, interpretation and presentation. It starts with low-risk uses and adopts agentic workflows as they mature.",p:["Less time on mechanical build and data work","More robust review on our models and client models","A better presentation layer, and client tools later"]},
+ {t:"A solution mindset",go:4,d:"Start each engagement from the decision the client has to make, and use the model to deliver the answer alongside valuation, diligence and deal colleagues.",p:["Scope from the decision, not the template","Involve other workstreams from day one","Lead the output with what the numbers mean"]},
+ {t:"Go to market with wider FVA",go:5,d:"Be part of colleagues' client conversations, recognise where modelling adds to them, and pitch and deliver together. Over time, use those relationships to pitch wider FVA services.",p:["Join pitches early, not as an add-on","Spot white spaces for new services","Joint propositions, starting with loan tape and diligence"]},
+ {t:"Loan tape analytics",go:6,d:"A new offering for buy-side deals on credit portfolios. Loan- and cohort-level analysis shows where growth and risk really sit, and links it to price and terms.",p:["Growth, pricing, vintages, roll and cure rates","Findings tied to price and the SPA","Started on live deals, toolkit built as we go"]}
+];
+const hubBtns=[...document.querySelectorAll("#hub .node")].sort((a,b)=>a.dataset.i-b.dataset.i);
+picker(hubBtns,$("#hubD"),hub,x=>`<div class="cols2"><div><h3>${esc(x.t)}</h3><p style="margin-top:6px;color:var(--mute)">${esc(x.d)}</p></div><div>${list(x.p)}<button class="badge" style="border:0;margin-top:10px;min-height:32px" data-go="${x.go}">Open this page →</button></div></div>`);
+$("#hubD").addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(+b.dataset.go);});
+
+/* AI chain */
+const steps=[
+ {k:"map",t:"Scope",s:"Model design",u:"Driver map, model architecture, KPI list and data request drafted by hand from the brief.",a:"AI drafts the driver map, structure, KPIs and data request from the brief and our past models, for us to refine.",w:"Deciding what the model must answer, and how much detail it needs.",e:"Faster, more consistent kick-off"},
+ {k:"db",t:"Data",s:"Clean and map",u:"Hours spent mapping trial balances, reformatting client data and reconciling fields.",a:"AI helps map accounts and loan tape fields, writes the clean-up scripts, and flags gaps and inconsistencies.",w:"Confirming the mapping and chasing the client on real gaps.",e:"Less time on data wrangling"},
+ {k:"build",t:"Build",s:"First cut",dev:1,u:"The first version is built from scratch or adapted from an old model.",a:"Today: help with formulas, structure and macros. In development at EY-Parthenon: an agentic workflow that produces a first cut from our specification and modelling standards.",w:"Defining the requirements, checking the logic and calibrating it to the data.",e:"Team time moves from building to checking"},
+ {k:"shield",t:"Review",s:"Checks and challenge",dev:1,u:"Manual cell-by-cell checks, limited by time and reviewer capacity.",a:"AI checks for hard-codes, inconsistent formulas, broken links, sign errors and balance checks, and flags assumptions out of line with history. An agentic review workflow is also in development.",w:"Deciding which findings matter and what they mean for the answer.",e:"More robust output; review capacity scales"},
+ {k:"compass",t:"Interpret",s:"What it means",u:"Variance explanations and commentary written from scratch at the end.",a:"AI drafts variance explanations, sensitivity commentary and benchmark comparisons for us to edit.",w:"The commercial view, and standing behind it.",e:"More senior time on the so-what"},
+ {k:"screen",t:"Present",s:"Presentation layer",u:"Static slides and Excel outputs.",a:"AI makes it quick to build interactive outputs: executive summaries, scenario views and dashboards, like this page.",w:"What the client needs to see, and the story it tells.",e:"Clients can explore results themselves"}
+];
+$("#chain").innerHTML=steps.map(s=>`<button class="${s.dev?"dev":""}" aria-pressed="false">${ic(s.k)}<b>${esc(s.t)}</b><small>${esc(s.s)}</small></button>`).join("");
+picker([...document.querySelectorAll("#chain button")],$("#chainD"),steps,x=>`<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px"><h3>${esc(x.t)}</h3><span class="badge">${ic("trend")}${esc(x.e)}</span>${x.dev?'<span class="badge red">Agentic workflow in development</span>':""}</div><div class="trio"><div><span class="l">The usual way</span><p>${esc(x.u)}</p></div><div><span class="l">With AI</span><p>${esc(x.a)}</p></div><div><span class="l">What stays with us</span><p>${esc(x.w)}</p></div></div>`);
+
+/* stairs */
+const st=[
+ {k:"spark",t:"AI in our own work",s:"Now",d:"Using AI day to day across scoping, data, build support, review checks and commentary. This is where most of the efficiency gain is today.",p:["Shared prompt and skills library","Low-risk uses first, measured on real engagements","Everyone on the team using it, not just a few"]},
+ {k:"build",t:"Agentic workflows",s:"Being developed",d:"Workflows that take our requirements and produce a first-cut model, or run a structured review. At EY-Parthenon we are working on developing these; they need more testing before they are relied on.",p:["First-cut model build from our specification","Structured model review with logged findings","Adopted only once they are reliable"]},
+ {k:"screen",t:"Presentation layer and client tools",s:"As it matures",d:"Interactive outputs for clients first, then, where there is real demand, AI-powered tools we can offer as solutions. This comes later and would need firm sign-off.",p:["Interactive summaries and scenario views","Tools for white spaces such as investor return economics","Built with the right testing, security and approvals"]}
+];
+$("#stairs").innerHTML=st.map(s=>`<button aria-pressed="false">${ic(s.k)}<small>${esc(s.s)}</small><b>${esc(s.t)}</b></button>`).join("");
+picker([...document.querySelectorAll("#stairs button")],$("#stairsD"),st,x=>`<div class="cols2"><div><h3>${esc(x.t)}</h3><p style="margin-top:6px;color:var(--mute)">${esc(x.d)}</p></div><div>${list(x.p)}</div></div>`);
+
+/* cycle */
+const cyc=[
+ {k:"chat",t:["Join","conversations"],h:"Join colleagues' conversations",d:"Take part in pitches and early client discussions across FVA, so modelling is part of the proposal from the start, not added later."},
+ {k:"search",t:["Spot","white spaces"],h:"Spot white spaces",d:"Listen for needs nobody has picked up: a forecast nobody has tested, a model being rebuilt every time, a tape only looked at in aggregate. Some become new services."},
+ {k:"handshake",t:["Pitch","together"],h:"Pitch together",d:"Build joint propositions with colleagues. Loan tape analytics alongside buy-side diligence would be the first."},
+ {k:"layers",t:["Deliver","jointly"],h:"Deliver jointly",d:"Work as one team on the engagement, and share models, templates and AI tools so the benefit goes beyond my own work."},
+ {k:"trend",t:["Grow","relationships"],h:"Grow relationships",d:"Repeat work and trust with clients and colleagues. Over time, this is what lets me pitch wider FVA services, not only modelling."}
+];
+{
+ const svg=$("#cyc"),cx=240,cy=225,R=150,n=cyc.length,ang=i=>(-90+i*360/n)*Math.PI/180;
+ const pt=(a,r)=>[cx+r*Math.cos(a),cy+r*Math.sin(a)];
+ let s=`<defs><marker id="cyc-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--mute)"/></marker></defs>`;
+ for(let i=0;i<n;i++){const a1=ang(i)+0.24,a2=ang(i+1)-0.24,[x1,y1]=pt(a1,R),[x2,y2]=pt(a2,R);s+=`<path d="M${x1.toFixed(1)} ${y1.toFixed(1)}A${R} ${R} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}" fill="none" stroke="var(--mute)" stroke-width="1.5" marker-end="url(#cyc-arrow)"/>`;}
+ s+=`<text x="${cx}" y="${cy-6}" text-anchor="middle" font-size="16" font-weight="600" fill="var(--ink)">Modelling with</text><text x="${cx}" y="${cy+14}" text-anchor="middle" font-size="16" font-weight="600" fill="var(--ink)">wider FVA</text>`;
+ cyc.forEach((c,i)=>{const[x,y]=pt(ang(i),R),below=y>cy-20,ly=below?y+52:y-48;
+  s+=`<g class="n" tabindex="0" role="button" aria-pressed="false" aria-label="${esc(c.h)}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="32"/><g class="ig" transform="translate(${(x-13).toFixed(1)} ${(y-13).toFixed(1)}) scale(1.08)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${P[c.k]}</g><text x="${x.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" font-size="14.5" fill="var(--ink)" font-weight="600">${esc(c.t[0])}</text><text x="${x.toFixed(1)}" y="${(ly+18).toFixed(1)}" text-anchor="middle" font-size="14.5" fill="var(--mute)">${esc(c.t[1])}</text></g>`;});
+ svg.innerHTML=s;
+ picker([...svg.querySelectorAll("g.n")],$("#cycD"),cyc,x=>`<div style="display:flex;gap:12px;align-items:center;margin-bottom:8px">${ic(x.k)}<h3>${esc(x.h)}</h3></div><p style="color:var(--mute)">${esc(x.d)}</p>`);
+}
+
+/* lenses */
+const lens=[
+ {k:"trend",t:"Growth and mix",l:"New versus existing borrowers, product, channel and geography over time.",q:"Where is growth really coming from, and will it continue?"},
+ {k:"coins",t:"Pricing and terms",l:"Ticket size, tenor and rate by cohort and by period.",q:"Is growth being bought through pricing or looser terms?"},
+ {k:"chart",t:"Vintages and delinquency",l:"Loss curves by origination vintage and days-past-due buckets.",q:"Are newer loans performing better or worse than older ones?"},
+ {k:"alert",t:"Roll and cure rates",l:"How accounts move between delinquency buckets, and how many return to current.",q:"How much of the book is one step away from a loss?"},
+ {k:"search",t:"Concentration and data quality",l:"Largest exposures, tape-to-ledger reconciliation, missing or inconsistent fields.",q:"Can we rely on the tape, and where is the risk concentrated?"},
+ {k:"flag",t:"Link to value",l:"Expected losses and cash flows carried into the valuation or pricing.",q:"What does this mean for price, structure and the SPA?"}
+];
+$("#lens").innerHTML=lens.map(x=>`<button aria-pressed="false">${ic(x.k)}${esc(x.t)}</button>`).join("");
+picker([...document.querySelectorAll("#lens button")],$("#lensD"),lens,x=>`<div class="trio"><div><span class="l">Area</span><p><b>${esc(x.t)}</b></p></div><div><span class="l">What I look at</span><p>${esc(x.l)}</p></div><div><span class="l">The buyer's question it answers</span><p>${esc(x.q)}</p></div></div>`);
+
+/* arc */
+const arc=[
+ {k:"layers",s:"Step 1",t:"Strengthen the modelling core",d:"Deliver on the team's engagements, introduce the AI playbook in our process, and run loan tape analytics on live deals.",p:["AI-assisted build and review on our own models","Shared templates, prompts and tools","Loan tape analytics on one or two live deals"]},
+ {k:"people",s:"Step 2",t:"Bring modelling into wider FVA work",d:"Work alongside colleagues across FVA, take modelling into their pitches and engagements, and build joint propositions.",p:["Modelling in FVA proposals from the start","Joint offerings, starting with loan tape and diligence","New service ideas from those conversations"]},
+ {k:"flag",s:"Step 3",t:"Lead as a transaction consultant",d:"Use the relationships and credibility built along the way to originate and pitch wider FVA services, with modelling as one way we deliver.",p:["Originate work across FVA, not only modelling","Lead client conversations from the decision down","A small team around what has traction"]}
+];
+$("#arc").innerHTML=arc.map(x=>`<button aria-pressed="false">${ic(x.k)}<small>${esc(x.s)}</small><b>${esc(x.t)}</b></button>`).join("");
+picker([...document.querySelectorAll("#arc button")],$("#arcD"),arc,x=>`<div class="cols2"><div><h3>${esc(x.t)}</h3><p style="margin-top:6px;color:var(--mute)">${esc(x.d)}</p></div><div>${list(x.p)}</div></div>`);
+
+/* deck */
+const deck=$("#deck"),slides=[...deck.querySelectorAll(".slide")],N=slides.length;let cur=0;
+$("#dots").innerHTML=slides.map((s,i)=>`<button aria-label="Page ${i+1}: ${esc(s.dataset.name)}"></button>`).join("");
+const dots=[...document.querySelectorAll("#dots button")];
+const show=i=>{cur=i;$("#sec").textContent=`${i+1} / ${N} · ${slides[i].dataset.name}`;dots.forEach((d,j)=>d.setAttribute("aria-current",String(i===j)));$("#prev").disabled=i===0;$("#next").disabled=i===N-1;};
+function go(i){i=Math.max(0,Math.min(N-1,i));deck.scrollTo({left:slides[i].offsetLeft,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});show(i);}
+dots.forEach((d,i)=>d.addEventListener("click",()=>go(i)));
+$("#prev").addEventListener("click",()=>go(cur-1));$("#next").addEventListener("click",()=>go(cur+1));
+document.addEventListener("keydown",e=>{if(e.target.closest&&e.target.closest("g.n"))return;if(e.key==="ArrowRight"||e.key==="PageDown"){e.preventDefault();go(cur+1);}if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(cur-1);}});
+let tm;deck.addEventListener("scroll",()=>{clearTimeout(tm);tm=setTimeout(()=>{const i=Math.round(deck.scrollLeft/deck.clientWidth);if(i!==cur)show(i);},80);});
+addEventListener("resize",()=>{deck.scrollLeft=slides[cur].offsetLeft;});
+show(0);
+}
+</script>
+</body>
+</html>
